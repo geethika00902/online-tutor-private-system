@@ -8,80 +8,82 @@ A Node.js + MySQL web app for students to book sessions with teachers.
 - MySQL 8+ (or MariaDB)
 - Port 3001 open on the host
 
-## Configure
+## Quick Start (Local)
 
-App config is in `config.js`.
-
-```
-module.exports = {
-	database: {
-		host: 'localhost',
-		user: 'root',
-		password: '',
-		database: 'tutor_system',
-		port: 3306
-	},
-	server: { port: 3001 },
-	policy: {
-		cancelLockMinutes: 1440,           // cannot cancel within 24h
-		maxDailyBookingMinutes: 360        // 6h per day limit (0 to disable)
-	}
-};
+```bash
+npm install
+copy .env.example .env   # Windows PowerShell: copy .env.example .env
+# Edit .env if needed
+npm start
+# App: http://localhost:3001
 ```
 
-Environment variables (optional override) you may set on hosting providers:
+## Configuration via Environment Variables
 
-- DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT
-- PORT
+Configuration is loaded in `config.js` using `dotenv` and `process.env` with sensible defaults.
 
-If you use env vars, adapt `config.js` to read from `process.env` or keep file-based config as is.
+Supported variables:
 
-## Database
+- DB_HOST (default: localhost)
+- DB_USER (default: root)
+- DB_PASSWORD (default: "")
+- DB_NAME (default: tutor_system)
+- DB_PORT (default: 3306)
+- PORT or SERVER_PORT (default: 3001)
+- POLICY_CANCEL_LOCK_MINUTES (default: 1440)
+- POLICY_MAX_DAILY_BOOKING_MINUTES (default: 360)
+
+See `.env.example` for a ready-to-copy template.
+
+## Database Setup
 
 1) Create DB and tables
 
-```
-mysql -u root -p
-CREATE DATABASE tutor_system;
+```sql
+-- In MySQL shell or phpMyAdmin
+CREATE DATABASE IF NOT EXISTS tutor_system;
 USE tutor_system;
 SOURCE database-schema.sql;
 ```
 
-2) (Optional) Add sample data using your own script or phpMyAdmin.
+2) (Optional) Seed sample data
 
-## Install & Run (local)
+```bash
+node insert-sample-data.js
+```
 
-```
-npm install
-node server.js
-# App: http://localhost:3001
-```
+## Run Scripts
+
+- Start: `npm start`
+- Dev (auto-restart): `npm run dev`
+- Test: `npm test` (placeholder; passes for CI)
 
 ## Deploy
 
-### Render / Railway
-- Push this repo to GitHub
-- Create a Web Service
-- Build command: `npm install`
-- Start command: `node server.js`
-- Add a managed MySQL (or external MySQL) and set DB env vars accordingly
-- Expose port 3001
+### Local (XAMPP/MySQL)
+- Ensure MySQL is running and `.env` matches credentials.
+- Start with `npm start` and visit `http://localhost:3001`.
 
-### VPS (Ubuntu)
-```
-# Node & pm2
+### Render / Railway (Cloud)
+- Push this repo to GitHub.
+- Create a Web Service.
+- Build command: `npm ci`
+- Start command: `node server.js`
+- Set env vars: DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, PORT.
+- Attach managed MySQL (or use external) and update env vars accordingly.
+
+### VPS (Ubuntu) with pm2
+```bash
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm i -g pm2
-
-# App
 git clone <your-repo>
 cd online-tutor-private-system
 npm ci
+cp .env.example .env && nano .env
 pm2 start server.js --name tutor
 pm2 save
-
-# (optional) Nginx reverse proxy to port 3001
+# (optional) Put Nginx in front and proxy to port 3001
 ```
 
 ## Features (brief)
@@ -105,7 +107,13 @@ pm2 save
 - POST `/api/send-message`, GET `/api/messages/:userId/:otherUserId`, GET `/api/user-messages/:userId`
 - PUT `/api/update-location/:userId`
 
-## Notes
-- Ensure MySQL is running and `config.js` matches your credentials
-- For public deployment, use a hosted MySQL (e.g., PlanetScale, Aiven) and update config
+## Project Management (Issues & Milestones)
+- Create issues for: validation, pagination, rate limits, UI polish, tests.
+- Milestones idea:
+  - M1: MVP auth + booking flow
+  - M2: Messaging + teacher directory polish
+  - M3: CI, tests, deployment hardening
 
+## Notes
+- Ensure MySQL is running; set `.env` accordingly.
+- For public deployment, prefer hosted MySQL and use env vars.
