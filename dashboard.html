@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Online Private Tutor System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-graduation-cap"></i> Tutor System</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <i class="fas fa-tachometer-alt"></i> Overview
+                </a>
+                <a href="#" class="nav-item" data-section="profile">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+                <a href="#" class="nav-item" data-section="sessions">
+                    <i class="fas fa-calendar-alt"></i> Sessions
+                </a>
+                <a href="#" class="nav-item" data-section="teachers" id="teachersNav" style="display: none;">
+                    <i class="fas fa-chalkboard-teacher"></i> Find Teachers
+                </a>
+                <a href="#" class="nav-item" data-section="messages">
+                    <i class="fas fa-envelope"></i> Messages
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1 id="welcomeMessage">Welcome!</h1>
+                    <p id="userInfo">Loading...</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content Sections -->
+            <div class="content">
+                <!-- Overview Section -->
+                <div id="overview" class="content-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalSessions">0</h3>
+                                <p>Total Sessions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="averageRating">0.0</h3>
+                                <p>Average Rating</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="hoursCompleted">0</h3>
+                                <p>Hours Completed</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="unreadMessages">0</h3>
+                                <p>Unread Messages</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-activity">
+                        <h2>Recent Activity</h2>
+                        <div class="activity-list" id="recentActivity">
+                            <div class="activity-item">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Welcome to your dashboard! Complete your profile to get started.</p>
+                                <span class="activity-time">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile Section -->
+                <div id="profile" class="content-section">
+                    <h2>Profile Information</h2>
+                    <div class="profile-form">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="profileFirstName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="profileLastName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="profileEmail" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" id="profilePhone" readonly>
+                        </div>
+                        <div class="form-group" id="profileGradeSection" style="display: none;">
+                            <label>Grade Level</label>
+                            <input type="text" id="profileGrade" readonly>
+                        </div>
+                        <div class="form-group" id="profileSubjectSection" style="display: none;">
+                            <label>Subject Specialization</label>
+                            <input type="text" id="profileSubject" readonly>
+                        </div>
+                        <div class="form-group" id="profileExperienceSection" style="display: none;">
+                            <label>Years of Experience</label>
+                            <input type="text" id="profileExperience" readonly>
+                        </div>
+                        <div class="form-group" id="profileLocationSection" style="display: none;">
+                            <label>Location (required)</label>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <input type="text" id="profileLocation" placeholder="City, Area or Address">
+                                <button class="update-password-btn" onclick="saveLocation()" style="white-space:nowrap;">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sessions Section -->
+                <div id="sessions" class="content-section">
+                    <h2>My Sessions</h2>
+                    <div class="sessions-list" id="sessionsList">
+                        <div class="no-sessions">
+                            <i class="fas fa-calendar-times"></i>
+                            <p>No sessions scheduled yet.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Teachers Directory Section (for students) -->
+                <div id="teachers" class="content-section">
+                    <h2>Find Teachers</h2>
+                    <div class="teachers-directory" id="teachersDirectory">
+                        <div class="loading-teachers">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading teachers...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messages Section -->
+                <div id="messages" class="content-section">
+                    <h2>Messages</h2>
+                    <div class="messages-list" id="messagesList">
+                        <div class="no-messages">
+                            <i class="fas fa-envelope-open"></i>
+                            <p>No messages yet.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Section -->
+                <div id="settings" class="content-section">
+                    <h2>Settings</h2>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Change Password</label>
+                            <input type="password" id="newPassword" placeholder="New Password">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmNewPassword" placeholder="Confirm New Password">
+                        </div>
+                        <button class="update-password-btn" onclick="updatePassword()">
+                            <i class="fas fa-key"></i> Update Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message Modal -->
+    <div id="messageModal" class="message-modal">
+        <div class="message-modal-content">
+            <div class="message-modal-header">
+                <h2 id="messageModalTitle">Send Message</h2>
+                <span class="message-close" onclick="closeMessageModal()">&times;</span>
+            </div>
+            
+            <form id="messageForm" class="message-form">
+                <textarea id="messageInput" class="message-input" placeholder="Type your message here..." required></textarea>
+                <button type="submit" class="send-message-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Conversation Modal -->
+    <div id="conversationModal" class="message-modal">
+        <div class="conversation-modal-content">
+            <div class="message-modal-header">
+                <h2 id="conversationModalTitle">Conversation</h2>
+                <span class="message-close" onclick="closeConversationModal()">&times;</span>
+            </div>
+            
+            <div class="conversation-container">
+                <div class="conversation-messages" id="conversationMessages">
+                    <!-- Messages will be loaded here -->
+                </div>
+                
+                <form id="replyForm" class="reply-form">
+                    <div class="reply-input-container">
+                        <textarea id="replyInput" class="reply-input" placeholder="Type your reply..." required></textarea>
+                        <button type="submit" class="send-reply-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="message-modal">
+        <div class="message-modal-content">
+            <div class="message-modal-header">
+                <h2 id="bookingModalTitle">Book Session</h2>
+                <span class="message-close" onclick="closeBookingModal()">&times;</span>
+            </div>
+            <form id="bookingForm" class="message-form">
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="bookingDate" required>
+                </div>
+                <div class="form-row" style="display:flex; gap:10px">
+                    <div class="form-group" style="flex:1">
+                        <label>Start Time</label>
+                        <input type="time" id="bookingStart" required>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>End Time</label>
+                        <input type="time" id="bookingEnd" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" id="bookingSubject" placeholder="e.g., Mathematics" required>
+                </div>
+                <div class="form-group">
+                    <small id="bookingPriceHint" style="opacity:.8"></small>
+                </div>
+                <button type="submit" class="send-message-btn">
+                    <i class="fas fa-calendar-check"></i> Confirm Booking
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="dashboard.js"></script>
+</body>
+</html>

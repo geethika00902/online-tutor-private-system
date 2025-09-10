@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Private Tutor System - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="home-container">
+            <div class="home-header">
+                <h1><i class="fas fa-graduation-cap"></i> Tutor System</h1>
+                <p>Join our online tutoring community</p>
+            </div>
+            
+            <div class="registration-options">
+                <div class="option-card student-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h2>Register as Student</h2>
+                    <p>Join as a student to get personalized tutoring from qualified teachers</p>
+                    <button class="register-btn student-btn" onclick="openRegistration('student')">
+                        <i class="fas fa-user-plus"></i> Register as Student
+                    </button>
+                </div>
+                
+                <div class="option-card teacher-card">
+                    <div class="card-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h2>Register as Teacher</h2>
+                    <p>Join as a teacher to share your knowledge and help students learn</p>
+                    <button class="register-btn teacher-btn" onclick="openRegistration('teacher')">
+                        <i class="fas fa-user-plus"></i> Register as Teacher
+                    </button>
+                </div>
+            </div>
+            
+            <div class="home-footer">
+                <p>Already have an account? <a href="index.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Registration</h2>
+                <span class="close" onclick="closeRegistration()">&times;</span>
+            </div>
+            
+            <form id="registrationForm" class="registration-form">
+                <div class="form-group">
+                    <label for="regFirstName">First Name</label>
+                    <input type="text" id="regFirstName" name="firstName" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regLastName">Last Name</label>
+                    <input type="text" id="regLastName" name="lastName" required>
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" name="email" required>
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" name="password" required>
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPhone">Phone Number</label>
+                    <input type="tel" id="regPhone" name="phone" required>
+                    <i class="fas fa-phone input-icon"></i>
+                </div>
+                
+                <div class="form-group" id="studentFields" style="display: none;">
+                    <label for="regGrade">Grade Level</label>
+                    <select id="regGrade" name="grade">
+                        <option value="">Select Grade</option>
+                        <option value="1">Grade 1</option>
+                        <option value="2">Grade 2</option>
+                        <option value="3">Grade 3</option>
+                        <option value="4">Grade 4</option>
+                        <option value="5">Grade 5</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7">Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                        <option value="college">College</option>
+                    </select>
+                    <i class="fas fa-graduation-cap input-icon"></i>
+                </div>
+                
+                <div class="form-group" id="teacherFields" style="display: none;">
+                    <label for="regSubject">Subject Specialization</label>
+                    <select id="regSubject" name="subject">
+                        <option value="">Select Subject</option>
+                        <option value="mathematics">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="english">English</option>
+                        <option value="history">History</option>
+                        <option value="physics">Physics</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="biology">Biology</option>
+                        <option value="computer-science">Computer Science</option>
+                        <option value="art">Art</option>
+                        <option value="music">Music</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <i class="fas fa-book input-icon"></i>
+                </div>
+                
+                <div class="form-group" id="teacherExperience" style="display: none;">
+                    <label for="regExperience">Years of Experience</label>
+                    <select id="regExperience" name="experience">
+                        <option value="">Select Experience</option>
+                        <option value="0-1">0-1 years</option>
+                        <option value="2-5">2-5 years</option>
+                        <option value="6-10">6-10 years</option>
+                        <option value="10+">10+ years</option>
+                    </select>
+                    <i class="fas fa-clock input-icon"></i>
+                </div>
+                
+                <button type="submit" class="register-submit-btn">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
